@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 namespace 기재 -->
+<mapper namespace="member">
+	<!-- 아이디 중복 검사 -->
+	<select id="check_id" parameterType="String" resultType="int">
+		select count(*) from member where userid = #{userid}
+	</select>
+
+	<!-- 이메일 중복 검사 -->
+	<select id="check_email" parameterType="String" resultType="int">
+		select count(*) from member where email = #{email}
+	</select>
+
+	<!-- 회원 가입 (유저아이디/패스워드/사용자이름/이메일/가입일/최근접속일/인증상태(T/F)/인증코드)
+	(아이디, 패스워드, 이메일, 가입일자, 로그인일자, 인증여부, 인증키)-->
+	<insert id="join_member" parameterType="com.dFrag.weddingHub.model.member.dto.MemberDTO">
+		insert into member
+		values(#{userid}, #{password}, #{name}, #{address}, #{email}, SYSDATE, SYSDATE, 'false', #{approval_key} , 0 ,'A',NULL,NULL)
+	</insert>
+	
+	<insert id="business_member" parameterType="com.dFrag.weddingHub.model.member.dto.MemberDTO">
+		insert into member
+		values(#{userid}, #{password}, #{name}, #{address}, #{email}, SYSDATE, SYSDATE, 'false', #{approval_key} , 0 ,'B' ,#{member_busiNum}
+		, #{member_company_name} )
+	</insert>
+
+	<!-- 이메일 인증 -->
+	<update id="approval_member" parameterType="member">
+		update member set approval_status = 'true' where email = #{email} and
+		approval_key = #{approval_key}
+	</update>
+	
+	<!-- 아이디값 검색 - 로그인 시등에 사용 -->
+	<select id="search_id_from_db" parameterType="String" resultType="member">
+		select * from member where userid = #{userid}
+	</select>
+	
+	<!-- 로그인 -->
+	<select id="login_member" parameterType="String" resultType="member">
+		select * from member where userid = #{userid} and password = #{password}
+	</select>
+	
+	<!-- 로그인 접속일자 수정 -->
+	<update id="update_log" parameterType="String">
+		update member set member_log_date = sysdate where userid = #{userid}
+	</update>
+	
+	<!-- 아이디 찾기 -->
+	<select id="find_id" parameterType="String" resultType="String">
+		select userid from member where email = #{email}
+	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="update_pw" parameterType="member">
+		update member set password = #{password} where userid = #{userid}
+	</update>
+	
+	<!-- 회원정보 수정 -->
+	<update id="update_mypage" parameterType="member">
+		update member set email = #{email} where userid = #{userid}
+	</update>
+
+	<!-- 회원탈퇴 -->
+	<delete id="withdrawal" parameterType="member">
+		delete from member where userid = #{userid} and password = #{password}
+	</delete>
+	
+	<select id="memberpoint" parameterType="member" resultType="member">
+	select * from member where userid = #{userid}
+	</select>
+	<!-- 기존 로그인 처리 프로세스 -->
+<!-- 	
+	이메일 중복 검사
+	<select id="check_email" parameterType="String" resultType="int">
+		select count(*) from member where email = #{email}
+	</select>
+
+	회원 가입 (유저아이디/패스워드/사용자이름/이메일/가입일/최근접속일/인증상태(T/F)/인증코드)
+	(아이디, 패스워드, 이메일, 가입일자, 로그인일자, 인증여부, 인증키)
+	<insert id="join_member" parameterType="member">
+		insert into member
+		values(#{userid}, #{password}, #{name}, #{email}, SYSDATE, SYSDATE, 'false', #{approval_key})
+	</insert>
+
+	이메일 인증
+	<update id="approval_member" parameterType="member">
+		update member set approval_status = 'true' where email = #{email} and
+		approval_key = #{approval_key}
+	</update>
+	
+	로그인
+	<select id="login" parameterType="String" resultType="member">
+		select * from member where userid = #{userid}
+	</select>
+	
+	로그인 접속일자 수정
+	<update id="update_log" parameterType="String">
+		update member set member_log_date = SYSDATE where userid = #{userid}
+	</update>
+	
+	아이디 찾기
+	<select id="find_id" parameterType="String" resultType="String">
+		select id from member where email = #{email}
+	</select>
+	
+	비밀번호 변경
+	<update id="update_pw" parameterType="member">
+		update member set password = #{password} where userid = #{userid}
+	</update>
+	
+	회원정보 수정
+	<update id="update_mypage" parameterType="member">
+		update member set email = #{email} where userid = #{userid}
+	</update>
+
+	회원탈퇴
+	<delete id="withdrawal" parameterType="member">
+		delete from member where userid = #{userid} and password = #{password}
+	</delete>
+	
+	회원목록보기
+	<select id="viewMember"
+	resultType="member">
+		select * from member where userid=#{userid} 
+	</select>
+ -->
+ 
+		<!-- 이후로 일반 회원 포인트 관리용 -->
+		
+	<!-- 일반 회원(member_type = 'A')만 포인트 조회 -->
+	<select id="memberList" parameterType="member" resultType="member">
+		SELECT userid, name, member_point FROM MEMBER WHERE member_type = 'A'
+	</select>
+	
+	<update id="pointupdate" parameterType="member">
+		UPDATE MEMBER SET member_point = member_point + #{member_point} WHERE userid=#{userid}
+	</update>
+	
+	<!-- 회원목록보기 -->
+	<select id="viewMember" resultType="member">
+		select * from member where userid=#{userid} 
+	</select>
+		
+		
+</mapper>

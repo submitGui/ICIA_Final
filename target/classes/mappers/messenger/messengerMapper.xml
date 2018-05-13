@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Messenger">
+	<insert id="messageinsert" parameterType="message">
+		INSERT INTO MESSAGE VALUES (
+		 sysdate ,#{msg_sender}, #{msg_recipient}, #{msg_title}, #{msg_content})
+	</insert>
+	
+	<select id="messagelist" parameterType="message" resultType="message">
+		SELECT msg_time, msg_sender, msg_title FROM MESSAGE WHERE msg_recipient = #{msg_recipient}
+	</select>
+	
+	<select id="messageDetailView" parameterType="String" resultType="message">
+		SELECT msg_sender, msg_title, msg_content, msg_recipient FROM MESSAGE WHERE msg_title = #{msg_title}
+	</select>
+</mapper>
+
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="Auction">
+	<!-- 경매 입찰시 내역 삽입 -->
+	<insert id="insertAuction" parameterType="com.dFrag.weddingHub.model.auction.dto.AuctionDTO">
+		INSERT INTO AUCTION VALUES(#{product_id}, #{userid}, #{member_point}, sysdate)
+	</insert>
+	<!-- 해당 경매 게시물의 경매 내역 조회 -->
+	<select id="auctionview" parameterType="com.dFrag.weddingHub.model.auction.dto.AuctionDTO"
+	 resultType="com.dFrag.weddingHub.model.auction.dto.AuctionDTO">
+		SELECT userid, member_point FROM AUCTION WHERE product_id = #{product_id} AND member_point = (SELECT MAX(member_point) FROM AUCTION)
+	</select>
+	<!-- 경매 입찰시 포인트 차감 -->
+	<update id="minusPoint" parameterType="com.dFrag.weddingHub.model.auction.dto.AuctionDTO">
+		UPDATE member SET member_point = member_point - #{member_point} where userid = #{userid}
+	</update>
+	
+</mapper>

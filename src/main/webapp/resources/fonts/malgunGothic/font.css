@@ -1,0 +1,26 @@
+@font-face {
+  font-family: "mGothic";
+  src: url('malgunGothic.eot');
+  src: local(''),
+       url('malgunGothic.eot?#iefix') format('embedded-opentype'),
+       url('malgunGothic.woff') format('woff'),
+       url('malgunGothic.ttf') format('truetype'),
+       url('malgunGothic.svg#MalgunGothic') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face{ 
+	font-family: "mGothicB";
+	font-style: normal;
+	font-weight: bold;
+	src: url('malgunGothic.eot');
+  	src: local(''), url('malgunGothic.eot?#iefix') format('embedded-opentype'),
+       url('malgunGothic.woff') format('woff'),
+       url('malgunGothic.ttf') format('truetype'),
+       url('malgunGothic.svg#MalgunGothic') format('svg');
+	/*src: url('malgunGothicBold.eot');
+	src: local(''),
+		 url('malgunGothicBold.woff') format('woff'),
+		 url('malgunGothicBold.ttf') format('truetype');*/
+}

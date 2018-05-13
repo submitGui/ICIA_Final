@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<typeAliases>
+
+		<typeAlias alias="member"
+			type="com.dFrag.weddingHub.model.member.dto.MemberDTO" />
+
+		<typeAlias alias="productDto"
+			type="com.dFrag.weddingHub.model.shop.dto.ProductDTO" />
+
+		<typeAlias alias="message"
+			type="com.dFrag.weddingHub.model.messanger.dto.MessengerDTO" />
+			
+	</typeAliases>
+
+</configuration>

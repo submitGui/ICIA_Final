@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mappers/shop/productMapper.xml -->
+
+<!-- 다른 mapper와 중복되지 않도록 네임스페이스 기재 -->
+<mapper namespace="product">
+<!-- 상품 등록 -->
+	<insert id="insert">
+		insert into product values
+			(seq_product.nextval, #{product_name}, #{price},
+			 #{description},#{picture_url},#{product_Start},#{product_end})
+	</insert>
+
+	<select id="product_list"
+		resultType=
+			"com.dFrag.weddingHub.model.shop.dto.ProductDTO">
+		<include refid="paging_header" />
+		select * from product
+		<include refid="search"/>
+		order by product_id desc
+		<include refid="paging_footer" />
+	</select>
+	<sql id="paging_header">
+		select *
+		from (
+		    select rownum as rn, A.*
+		    from (	
+	</sql>
+	<sql id="paging_footer">
+		    ) A
+		) where rn between #{start} and #{end}	
+	</sql>
+	
+	<select id="detail_product"
+		resultType=
+		 "com.dFrag.weddingHub.model.shop.dto.ProductDTO">
+		select * from product
+		where product_id=#{product_id}
+	</select>
+<!-- 상품정보 수정 -->	
+	<update id="update_product">
+		update product
+		set
+			product_name=#{product_name}, 
+			price=#{price},
+			description=#{description},
+			picture_url=#{picture_url}
+		where product_id=#{product_id}
+	</update>
+	
+	<!-- 첨부파일 이름 -->
+	<select id="fileInfo" resultType="String">
+		select picture_url from product
+		where product_id=#{product_id}
+	</select>
+<!-- 상품 레코드 삭제 -->	
+	<delete id="product_delete">
+		delete from product
+		where product_id=#{product_id}
+	</delete>
+	<!-- 레코드 갯수 계산 -->
+	<select id="countArticle" resultType="int">
+	select count(*) 
+	from product
+	<!-- refid는 다른태그의 id -->
+	<include refid="search"/>
+	</select>
+	
+	<sql id="search">
+		<choose>
+			<when test="search_option != 'all'">
+			where ${search_option} like #{keyword}
+			</when>
+			<otherwise>
+			where (product_name like #{keyword} 
+			or price like #{keyword}
+			or product_Start like #{keyword}
+			or product_end like #{keyword}
+			)
+			</otherwise>
+		</choose>
+	</sql>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

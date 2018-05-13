@@ -85,6 +85,4 @@ class="com.dFrag.weddingHub.interceptor.LoginInterceptor">
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 	</interceptors>
-
-
 </beans:beans>

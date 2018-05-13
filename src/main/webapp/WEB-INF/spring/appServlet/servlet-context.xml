@@ -66,8 +66,6 @@ class="com.dFrag.weddingHub.interceptor.SampleInterceptor">
 	<beans:bean id="loginInterceptor"
 class="com.dFrag.weddingHub.interceptor.LoginInterceptor">
 	</beans:bean>
-	<beans:bean id="adminInterceptor"
-class="com.dFrag.weddingHub.interceptor.AdminInterceptor" />
 
 <!-- 인터셉터 호출을 위한 url mapping -->
 	<interceptors>
@@ -85,14 +83,6 @@ class="com.dFrag.weddingHub.interceptor.AdminInterceptor" />
 			<mapping path="/shop/product/write.do"/>
 			<mapping path="/shop/product/insert.do"/>
 			<beans:ref bean="loginInterceptor"/>
-		</interceptor>
-		<interceptor>
-			<mapping path="/pdf/list.do"/>
-			<!-- <mapping path="/shop/product/write.do"/>
-			<mapping path="/shop/product/insert.do"/> -->
-			<mapping path="/chart/**" />
-			<mapping path="/jchart/**" />
-			<beans:ref bean="adminInterceptor" />
 		</interceptor>
 	</interceptors>
 

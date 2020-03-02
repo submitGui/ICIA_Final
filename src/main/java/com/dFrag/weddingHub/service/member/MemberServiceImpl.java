@@ -192,11 +192,11 @@ public class MemberServiceImpl implements MemberService {
 		// Mail Server 설정
 		String charSet = "UTF-8";
 		String hostSMTP = "smtp.naver.com";
-		String hostSMTPid = "kimkihyun004";            // 개인정보 포함!! 배포전 삭제 필수 !!
-		String hostSMTPpwd = "kim5485045!@";
+		String hostSMTPid = "아아디";            // 개인정보 포함!! 배포전 삭제 필수 !!
+		String hostSMTPpwd = "";
 
 		// 발신인 메일주소, 발신인 이름, 메일제목, 메일내용
-		String fromEmail = "kimkihyun004@naver.com";
+		String fromEmail = "아이디@naver.com";
 		String fromName = "WeddingHub 관리자";
 		String subject = "";
 		String msg = "";
